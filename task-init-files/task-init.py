@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # ==========V1.1==========
-import os, re, sys
+import os, re, sys, stat
 
 try:
     from bs4 import BeautifulSoup
@@ -38,14 +38,21 @@ for task in soup.select('div[data-role^="task"]'):
     # Create the file
     if file:
         file_path = os.path.join(dir_name, file.text)
+        add_exec_perms = False
         with open(file_path, "w") as f:
             # Add shebang line according to file language
             if file.text.endswith(".py"):
                 f.write("#!/usr/bin/python3\n")
+                add_exec_perms = True
             elif file.text.endswith(".js"):
                 f.write("#!/usr/bin/node\n")
+                add_exec_perms = True
             elif re.search(r"^[^.]+$(?<!password)(?<!crack)", file.text):
                 f.write("#!/usr/bin/bash\n")
+                add_exec_perms = True
+            # Add executable permissions to the file if a shebang line was added
+            if add_exec_perms:
+                os.chmod(file_path, os.stat(file_path).st_mode | stat.S_IEXEC)
 
             # If it's a C file, include main.h and prototype function
             if file.text.endswith(".c"):
@@ -62,9 +69,7 @@ for task in soup.select('div[data-role^="task"]'):
 
                 f.write('#include "main.h"\n\n')
                 if prototype:
-                    f.write(
-                        f"{prototype.text[:-1]} {{\n\t/* your code here */\n}}\n"
-                    )
+                    f.write(f"{prototype.text[:-1]} {{\n\t/* your code here */\n}}\n")
 
 # Close the include guard in main.h if it was created
 if os.path.exists(main_h_path):
@@ -73,7 +78,7 @@ if os.path.exists(main_h_path):
 
 exit(0)
 
-# This script is v1 may have some bugs, please report
+# This script is v1.1 may have some bugs, please report
 # OR feel free to edit code
 
 # Credit: BIO
