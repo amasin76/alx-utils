@@ -76,6 +76,11 @@ if os.path.exists(main_h_path):
     with open(main_h_path, "a") as f:
         f.write("\n#endif /* MAIN_H */\n")
 
+# Create README.md file containing "Loading ..."
+readme_path = os.path.join(dir_name, "README.md")
+with open(readme_path, "w") as f:
+    f.write("Loading ...")
+
 exit(0)
 
 # This script is v1.1 may have some bugs, please report
