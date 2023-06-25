@@ -92,7 +92,7 @@ curl -s -S -f -L -o checker.bash https://simple-shell-tests.vercel.app/assets/fi
 find . -type f -name "*.bash" -exec chmod u+x {} \;
 
 # move test.bash from project/ dir to test/ dir
-mv ../test.bash .
+#mv ../test.bash .
 
 echo -e "\n\n\\e[32mSuccess\\e[0m: to download scriptes"
 echo -e "\\033[33mRun\\033[0m: \\033[1mcd test/ && ./test.bash -help\\033[0m for more infos"
