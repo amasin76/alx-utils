@@ -35,6 +35,8 @@ def process_tasks(soup, dir_name):
                 if file.text.endswith(".py"):
                     f.write("#!/usr/bin/python3\n")
                     add_exec_perms = True
+                    if prototype:
+                        f.write(f"{prototype.text}\n")
                 elif file.text.endswith(".js"):
                     f.write("#!/usr/bin/node\n")
                     add_exec_perms = True
@@ -68,7 +70,7 @@ def process_tasks(soup, dir_name):
 def close_include_guard(dir_name):
     # Close the include guard in main.h if it was created
     main_h_path = os.path.join(dir_name, "main.h")
-    if os.path.exists(main_h_path):
+    if main_h_path and os.path.exists(main_h_path):
         with open(main_h_path, "a") as f:
             f.write("\n#endif /* MAIN_H */\n")
 

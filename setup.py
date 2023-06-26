@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="alx-utils",
-    version="0.7",
+    version="0.8",
     description="A collection of utility tools for ALX",
     author="BIO",
     url="https://github.com/amasin76/alx-utils",
